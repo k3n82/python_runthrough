@@ -10,7 +10,7 @@ A random string with atmost two vowels seperating each constanant and following 
 
 ## Usage
 
->Python3.5
+>\>Python3.5
 
 >python main.py
 
