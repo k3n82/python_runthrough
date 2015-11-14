@@ -1,10 +1,14 @@
-import tempconv
+from tempconv import *
 import argparse
 
+f = 'fahrenheit'
+c = 'celsius'
+k = 'kelvin'
+
 TempArgs = {
-	'fahrenheit': {'short': '-f', 'long': '--fahrenheit'},
-	'celsius'	: {'short': '-c', 'long': '--celsius'},
-	'kelvin'	: {'short': '-k', 'long': '--kelvin'}
+	f: {'short': '-f', 'long': '--fahrenheit'},
+	c: {'short': '-c', 'long': '--celsius'},
+	k: {'short': '-k', 'long': '--kelvin'}
 }
 
 parser = argparse.ArgumentParser(description='Converts temperature between fahrenheit, celsius, and kelvin')
@@ -14,41 +18,12 @@ for name, temp in TempArgs.items():
 
 args = parser.parse_args()
 
-convertees = {name: getattr(args, name) for name, temp in TempArgs.items() if getattr(args, name) }
-converter = {name: {} for name, temp in TempArgs.items() if getattr(args, name) is not None and len(getattr(args, name)) == 0 }
+frm = {name: getattr(args, name) for name, temp in TempArgs.items() if getattr(args, name) }
+dst =  [i for i in TempArgs.keys() if getattr(args, i) is not None and len(getattr(args, i)) == 0]
 
-for conv_temp, container in converter.items():
-	if conv_temp is 'fahrenheit':
-		"""  Converts Temperatures to Fahrenheit """
-		for name, values in convertees.items():
-			if name == 'celsius':
-				container['celsius'] = [tempconv.celsius_to_fahrenheit(v) for v in values ]
-			if name == 'kelvin':
-				container['kelvin'] = [tempconv.kelvin_to_fahrenheit(v) for v in values ]
+conversion = {(f,c):ftc, (f,k):ftk, (c,f):ctf, (c,k):ctk, (k,c):ktc, (k,f):ktf}
+result = {i: {j:[conversion[(i,j)](a) for a in v] for j in dst} for i, v in frm.items()}
 
-	elif conv_temp is 'celsius':
-		"""  Converts Temperatures to Celsius """
-		for name, values in convertees.items():
-			if name == 'fahrenheit':
-				container['fahrenheit'] = [tempconv.fahrenheit_to_celsius(v) for v in values ]
-			if name == 'kelvin':
-				container['kelvin'] = [tempconv.kelvin_to_celsius(v) for v in values ]
+for i, v in result.items():
+	[[print(i.capitalize() + ': '), print([str(x) + j[:1].upper() for x in k])] for j, k in v.items()]
 
-	elif conv_temp is 'kelvin':
-		"""  Converts Temperatures to Kelvin """
-		for name, values in convertees.items():
-			if name == 'celsius':
-				container['celsius'] = [tempconv.celsius_to_kelvin(v) for v in values ]
-			if name == 'fahrenheit':
-				container['fahrenheit'] = [tempconv.fahrenheit_to_kelvin(v) for v in values ]
-
-def fod(dict):
-	""" short for first_of_dictionary """
-	return next(iter(dict.values()))
-
-
-def simple_print(array):
-	print(*array, sep=' ')
-
-for i, v in converter.items():
-	simple_print(fod(v))

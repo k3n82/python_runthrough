@@ -1,17 +1,17 @@
-def celsius_to_kelvin(celsius):
+def ctk(celsius):
 	return celsius + 273.15
 
-def celsius_to_fahrenheit(celsius):
+def ctf(celsius):
 	return (celsius * 1.8) + 32
 
-def fahrenheit_to_celsius(fahrenheit):
+def ftc(fahrenheit):
 	return (fahrenheit - 32) / 1.8
 
-def fahrenheit_to_kelvin(fahrenheit):
-	return celsius_to_kelvin(fahrenheit_to_celsius(fahrenheit))
+def ftk(fahrenheit):
+	return ctk(ftc(fahrenheit))
 
-def kelvin_to_celsius(kelvin):
+def ktc(kelvin):
 	return kelvin - 273.15
 
-def kelvin_to_fahrenheit(kelvin):
-	return celsius_to_fahrenheit(kelvin_to_celsius(kelvin))
+def ktf(kelvin):
+	return ctf(ktc(kelvin))
