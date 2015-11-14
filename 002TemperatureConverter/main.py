@@ -19,7 +19,7 @@ for name, temp in TempArgs.items():
 args = parser.parse_args()
 
 frm = {name: getattr(args, name) for name, temp in TempArgs.items() if getattr(args, name) }
-dst =  [i for i in TempArgs.keys() if getattr(args, i) is not None and len(getattr(args, i)) == 0]
+dst = [i for i in TempArgs.keys() if getattr(args, i) is not None and len(getattr(args, i)) == 0]
 
 conversion = {(f,c):ftc, (f,k):ftk, (c,f):ctf, (c,k):ctk, (k,c):ktc, (k,f):ktf}
 result = {i: {j:[conversion[(i,j)](a) for a in v] for j in dst} for i, v in frm.items()}
