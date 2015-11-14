@@ -25,5 +25,5 @@ conversion = {(f,c):ftc, (f,k):ftk, (c,f):ctf, (c,k):ctk, (k,c):ktc, (k,f):ktf}
 result = {i: {j:[conversion[(i,j)](a) for a in v] for j in dst} for i, v in frm.items()}
 
 for i, v in result.items():
-	[[print(i.capitalize() + ': '), print([str(x) + j[:1].upper() for x in k])] for j, k in v.items()]
+	[[print(i.capitalize() + ': '), print(*[str(x) + j[:1].upper() for x in k])] for j, k in v.items()]
 
